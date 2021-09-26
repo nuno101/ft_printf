@@ -6,10 +6,11 @@
 /*   By: nuno <nlouro@student.42heilbronn.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/25 23:43:32 by nuno              #+#    #+#             */
-/*   Updated: 2021/09/26 00:36:01 by nuno             ###   ########.fr       */
+/*   Updated: 2021/09/26 11:02:18 by nuno             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "libftprintf.h"
 
 /*
  * printf handling cspdiuxX%
@@ -24,11 +25,12 @@
 %% print a percent sign.
  */
 
-int	ft_printf(const char *, ...)
+static	int print_var(char *fmt, ...)
 {
 	va_list ap, ap2;
 	int d;
 	char c, *s;
+	
 
 	va_start(ap, fmt);
 	va_copy(ap2, ap);
@@ -53,6 +55,35 @@ int	ft_printf(const char *, ...)
 	/* use ap2 to iterate over the arguments again */
 
 	va_end(ap2);
+	return (0);
+}
+/*
+va_list args;
+va_start(args, b);
+exampleV(b, args);
+va_end(args);
+*/
+int	ft_printf(const char *fmt, ...)
+{
+	int i;
+	int j;
+
+	if (fmt == 0)
+		return (0);
+	i = 0;
+	j = 0;
+	while (fmt[i + j] != '\0')
+	{
+		if (fmt[i + j] == '%')
+		{
+			j = i;
+			i = 0;
+			write(1, fmt, j - 1 - i);
+			print_var(char *fmt, args); 
+		    j = j + 2;
+		}
+		i++;
+	}
 
 	return (0);
 }
