@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nlouro <nlouro@student.42heilbronn.de>       +#+  +:+       +#+        */
+/*   By: nlouro <nlouro@student.42heilbronn.de>       +#+  +:+       +#+      */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/09/25 23:43:32 by nlouro              #+#    #+#             */
-/*   Updated: 2021/09/30 15:55:33 by nlouro           ###   ########.fr       */
+/*   Created: 2021/09/25 23:43:32 by nlouro              #+#    #+#           */
+/*   Updated: 2021/09/30 16:53:57 by nlouro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libftprintf.h"
+#include "ft_printf.h"
 
 /*
  * %c print a single character.
