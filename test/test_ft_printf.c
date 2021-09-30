@@ -10,12 +10,14 @@ int	main()
 
 	n = 12;
 	c = 'c';
-	//*str = "test";
+	*str = "test";
 
-	printf("Printing n: %d\n", n);
-	ft_printf("Printing n: %d\n", n);
-
-	printf("Printing c: %c\n", c);
+	printf("  _printing n: %d\n", n);
+	ft_printf("ft_printing n: %d\n", n);
+	printf("  _printing c: %c\n", c);
+	ft_printf("ft_printing c: %c\n", c);
+	printf("\n");
+	return (0);
 	printf("Printing str: %s\n", str);
 
 	return (0);
