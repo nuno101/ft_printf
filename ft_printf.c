@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nuno <nlouro@student.42heilbronn.de>       +#+  +:+       +#+        */
+/*   By: nlouro <nlouro@student.42heilbronn.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/09/25 23:43:32 by nuno              #+#    #+#             */
-/*   Updated: 2021/09/30 12:54:31 by nlouro           ###   ########.fr       */
+/*   Created: 2021/09/25 23:43:32 by nlouro              #+#    #+#             */
+/*   Updated: 2021/09/30 15:55:33 by nlouro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,34 +24,29 @@
  * %% print a percent sign.
  */
 
-static int	ft_putstr_fd(char *s, int fd);
-//static int	ft_putchar_fd(char c, int fd);
-static int	ft_putnbr_fd(int n, int fd);
+static int	_putstr_fd(char *s, int fd);
+static int	_putchar_fd(char c, int fd);
+static int	_putnbr_fd(int n, int fd);
+static int	_putptr_fd(void *ptr, int fd);
+static int	_putnbrhex_fd(unsigned int n, char *base, int fd);
 
-static	int	print_arg(const char *fmt, va_list *ap, int i)
+static	int	_print_arg(const char *fmt, va_list *ap, int i)
 {
-	int		d;
 	int		len;
-	char	c;
-	char	*s;
 
 	len = 0;
-	if (fmt[i] == 's')
-	{
-		s = va_arg(*ap, char *);
-		len = ft_putstr_fd(s, 1);
-	}
-	else if (fmt[i] == 'd')
-	{
-		d = va_arg(*ap, int);
-		len = ft_putnbr_fd(d, 1);
-	}
-	else if (fmt[i] == 'c')
-	{
-		c = va_arg(*ap, int);
-		write(1, &c, 1);
-		len = 1;
-	}
+	if (fmt[i] == 'c')
+		len = _putchar_fd(va_arg(*ap, int), 1);
+	else if (fmt[i] == 's')
+		len = _putstr_fd(va_arg(*ap, char *), 1);
+	else if (fmt[i] == 'p')
+		len = _putptr_fd(va_arg(*ap, void *), 1);
+	else if (fmt[i] == 'd' || fmt[i] == 'i' || fmt[i] == 'u')
+		len = _putnbr_fd(va_arg(*ap, int), 1);
+	else if (fmt[i] == 'x')
+		len = _putnbrhex_fd(va_arg(*ap, int), "0123456789abcdef", 1);
+	else if (fmt[i] == 'X')
+		len = _putnbrhex_fd(va_arg(*ap, int), "0123456789ABCDEF", 1);
 	return (len);
 }
 
@@ -75,7 +70,7 @@ int	ft_printf(const char *fmt, ...)
 			//% character write(1, &fmt[i + j], 1);
 			j = j + i + 1;
 			i = 0;
-			len = print_arg(fmt, &ap, j); 
+			len = _print_arg(fmt, &ap, j); 
 			//printf("DEBUG j = %d, len = %d\n", j, len);
 		    j = j + len;
 			//j++;
@@ -88,7 +83,13 @@ int	ft_printf(const char *fmt, ...)
 	return (0);
 }
 
-static int	ft_putstr_fd(char *s, int fd)
+static int	_putchar_fd(char c, int fd)
+{
+	write(fd, &c, 1);
+	return (1);
+}
+
+static int	_putstr_fd(char *s, int fd)
 {
 	size_t	i;
 
@@ -101,10 +102,10 @@ static int	ft_putstr_fd(char *s, int fd)
 	return (i);
 }
 
-static	int	ft_putnbr_fd(int n, int fd)
+static	int	_putnbr_fd(int n, int fd)
 {
 	unsigned int	nb;
-	int i;
+	int				i;
 
 	nb = n;
 	i = 0;
@@ -116,7 +117,7 @@ static	int	ft_putnbr_fd(int n, int fd)
 	}
 	if (nb >= 10)
 	{
-		ft_putnbr_fd(nb / 10, fd);
+		_putnbr_fd(nb / 10, fd);
 		nb = nb % 10;
 	}
 	if (nb < 10)
@@ -126,4 +127,32 @@ static	int	ft_putnbr_fd(int n, int fd)
 		i++;
 	}
 	return (i);
+}
+static	int	_putnbrhex_fd(unsigned int n, char *base, int fd)
+{
+	unsigned	int	i;
+
+	i = 0;
+	if (n > 16)
+	{
+		_putnbrhex_fd(n / 16, base, fd);
+		n = n % 16;
+	}
+	if (n < 16)
+	{
+		//n = n + 48;
+		write(fd, &base[n], 1);
+		i++;
+	}
+	return (i);
+}
+
+static	int	_putptr_fd(void *ptr, int fd)
+{
+	void *p;
+
+	p = (void *) ptr;
+	write(fd, "0x", 2);
+	write(fd, &p, 12);
+	return (14);
 }
