@@ -8,17 +8,26 @@ int	main()
 	//char *str[5];
 	char str[] = "test";
 
-	n = 12;
+	n = 123;
 	c = 'c';
-	*str = "test";
+	//*str = "test";
+	//
+	printf("  _printing c: %c123\n", c);
+	ft_printf("ft_printing c: %c123\n", c);
 
-	printf("  _printing n: %d\n", n);
-	ft_printf("ft_printing n: %d\n", n);
-	printf("  _printing c: %c\n", c);
-	ft_printf("ft_printing c: %c\n", c);
+	printf("  _printing n: %d123\n", n);
+	ft_printf("ft_printing n: %d123\n", n);
+
+	n = 210;
+	printf("  _printing n: %d123\n", n);
+	ft_printf("ft_printing n: %d123\n", n);
+
+	printf("  _printing c: %c123\n", c);
+	ft_printf("ft_printing c: %c123\n", c);
+
 	printf("\n");
-	return (0);
-	printf("Printing str: %s\n", str);
+	printf("  _printing str: %s123\n", str);
+	ft_printf("ftprinting str: %s123\n", str);
 
 	return (0);
 }
