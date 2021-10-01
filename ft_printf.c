@@ -6,13 +6,14 @@
 /*   By: nlouro <nlouro@student.42heilbronn.de>       +#+  +:+       +#+      */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/25 23:43:32 by nlouro              #+#    #+#           */
-/*   Updated: 2021/10/01 10:15:06 by nlouro           ###   ########.fr       */
+/*   Updated: 2021/10/01 10:46:11 by nlouro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
 /*
+ * printf partial re-implementation:
  * %c print a single character.
  * %s print a string of characters.
  * %p The void * pointer argument is printed in hexadecimal. 
@@ -70,17 +71,18 @@ int	ft_printf(const char *fmt, ...)
 			//% character write(1, &fmt[i + j], 1);
 			j = j + i + 1;
 			i = 0;
-			len = _print_arg(fmt, &ap, j); 
+			len = _print_arg(fmt, &ap, j);
 			//printf("DEBUG j = %d, len = %d\n", j, len);
-		    j = j + len;
-			//j++;
-		} else {
+			j = j + len;
+		}
+		else
+		{
 			write(1, &fmt[i + j], 1);
 			i++;
 		}
 	}
 	va_end(ap);
-	return (i + j -1);
+	return (i + j - 1);
 }
 
 static int	_putchar_fd(char c, int fd)
@@ -128,6 +130,7 @@ static	int	_putnbr_fd(int n, int fd)
 	}
 	return (i);
 }
+
 static	int	_putnbrhex_fd(unsigned int n, char *base, int fd)
 {
 	unsigned	int	i;
@@ -149,7 +152,7 @@ static	int	_putnbrhex_fd(unsigned int n, char *base, int fd)
 
 static	int	_putptr_fd(void *ptr, int fd)
 {
-	void *p;
+	void	*p;
 
 	p = (void *) ptr;
 	write(fd, "0x", 2);
