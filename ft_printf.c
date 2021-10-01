@@ -6,11 +6,12 @@
 /*   By: nlouro <nlouro@student.42heilbronn.de>       +#+  +:+       +#+      */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/25 23:43:32 by nlouro              #+#    #+#           */
-/*   Updated: 2021/10/01 12:09:27 by nlouro           ###   ########.fr       */
+/*   Updated: 2021/10/01 15:51:54 by nlouro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
+#include "libft/ft_isdigit.c"
 
 /*
  * printf partial re-implementation:
@@ -27,9 +28,11 @@
 
 static int	_putstr(char *s);
 static int	_putchar(char c);
+static int	_nbrlen(int nb);
 static int	_putnbr(int n);
 static int	_putptr(void *ptr);
 static int	_putnbrhex(unsigned int n, char *base);
+static int	_putpercent();
 
 static	int	_print_arg(const char *fmt, va_list *ap, int i)
 {
@@ -48,10 +51,11 @@ static	int	_print_arg(const char *fmt, va_list *ap, int i)
 		len = _putnbrhex(va_arg(*ap, int), "0123456789abcdef");
 	else if (fmt[i] == 'X')
 		len = _putnbrhex(va_arg(*ap, int), "0123456789ABCDEF");
+	else if (fmt[i] == '%')
+		len = _putpercent(0);
 	return (len);
 }
 
-//printf("\nDEBUG i + j = %d", i + j);
 int	ft_printf(const char *fmt, ...)
 {
 	va_list	ap;
@@ -68,22 +72,16 @@ int	ft_printf(const char *fmt, ...)
 		if (fmt[i] == '%')
 		{
 			i++;
-			if (fmt[i] == '%')
-			{
-				write(1, &fmt[i], 1);
-				len++;
-			}
-			else
-			{
-				len += _print_arg(fmt, &ap, i);
-			}
+			while (ft_isdigit(fmt[i]))
+				i++;
+			len += _print_arg(fmt, &ap, i);
 		}
 		else
 		{
 			write(1, &fmt[i], 1);
-			i++;
 			len++;
 		}
+		i++;
 	}
 	va_end(ap);
 	return (len);
@@ -105,6 +103,23 @@ static int	_putstr(char *s)
 	while (s[i] != '\0')
 		i++;
 	write(1, s, i);
+	return (i);
+}
+
+static int	_nbrlen(int nb)
+{
+	int	i;
+
+	i = 0;
+	if (nb == 0)
+		return (1);
+	if (nb < 0)
+		i++;
+	while (nb != 0)
+	{
+		nb = nb / 10;
+		i++;
+	}
 	return (i);
 }
 
@@ -132,12 +147,12 @@ static	int	_putnbr(int n)
 		write(1, &nb, 1);
 		i++;
 	}
-	return (i);
+	return (_nbrlen(n));
 }
 
 static	int	_putnbrhex(unsigned int n, char *base)
 {
-	unsigned	int	i;
+	unsigned int	i;
 
 	i = 0;
 	if (n > 16)
@@ -161,4 +176,10 @@ static	int	_putptr(void *ptr)
 	write(1, "0x", 2);
 	write(1, &p, 12);
 	return (14);
+}
+
+static int	_putpercent()
+{
+	write(1, "%", 1);
+	return (1);
 }
