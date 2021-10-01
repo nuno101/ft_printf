@@ -51,7 +51,6 @@ int	main()
 	ftr = ft_printf("u: %i 123\n", u);
 	printf("r = %d and ftr = %d\n\n", r, ftr);
 
-	//printf("UINT_MAX: %u\n", UINT_MAX);
 	u = -1;
 	r = printf("u: %u\n", u);
 	ftr = ft_printf("u: %u\n", u);
@@ -60,6 +59,10 @@ int	main()
 	u = -2;
 	r = printf("u: %u 123\n", u);
 	ftr = ft_printf("u: %u 123\n", u);
+	printf("r = %d and ftr = %d\n\n", r, ftr);
+
+    r = printf(" NULL %s NULL \n", NULL);
+    ftr = ft_printf(" NULL %s NULL \n", NULL);
 	printf("r = %d and ftr = %d\n\n", r, ftr);
 
 	r = printf("  _printing hex: %x 123\n", u);

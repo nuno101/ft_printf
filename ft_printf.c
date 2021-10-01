@@ -6,7 +6,7 @@
 /*   By: nlouro <nlouro@student.42heilbronn.de>       +#+  +:+       +#+      */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/25 23:43:32 by nlouro              #+#    #+#           */
-/*   Updated: 2021/10/01 17:25:51 by nlouro           ###   ########.fr       */
+/*   Updated: 2021/10/01 17:42:12 by nlouro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,10 +50,7 @@ static	int	_print_arg(const char *fmt, va_list *ap, int i)
 	else if (fmt[i] == 'd' || fmt[i] == 'i')
 		len = _putnbr(va_arg(*ap, int));
 	else if (fmt[i] == 'u')
-	{
 		len = _putunbr(va_arg(*ap, unsigned int));
-		//printf("\nXXDEBUG len: %i", len);
-	}
 	else if (fmt[i] == 'x')
 		len = _putnbrhex(va_arg(*ap, int), "0123456789abcdef");
 	else if (fmt[i] == 'X')
@@ -105,7 +102,10 @@ static int	_putstr(char *s)
 	size_t	i;
 
 	if (s == 0)
-		return (0);
+	{
+		_putstr("(null)");
+		return (6);
+	}
 	i = 0;
 	while (s[i] != '\0')
 		i++;
