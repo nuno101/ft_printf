@@ -6,7 +6,7 @@
 /*   By: nlouro <nlouro@student.42heilbronn.de>       +#+  +:+       +#+      */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/25 23:43:32 by nlouro              #+#    #+#           */
-/*   Updated: 2021/10/01 12:04:11 by nlouro           ###   ########.fr       */
+/*   Updated: 2021/10/01 12:09:27 by nlouro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,11 @@
  * %% print a percent sign.
  */
 
-static int	_putstr_fd(char *s, int fd);
-static int	_putchar_fd(char c, int fd);
-static int	_putnbr_fd(int n, int fd);
-static int	_putptr_fd(void *ptr, int fd);
-static int	_putnbrhex_fd(unsigned int n, char *base, int fd);
+static int	_putstr(char *s);
+static int	_putchar(char c);
+static int	_putnbr(int n);
+static int	_putptr(void *ptr);
+static int	_putnbrhex(unsigned int n, char *base);
 
 static	int	_print_arg(const char *fmt, va_list *ap, int i)
 {
@@ -37,17 +37,17 @@ static	int	_print_arg(const char *fmt, va_list *ap, int i)
 
 	len = 0;
 	if (fmt[i] == 'c')
-		len = _putchar_fd(va_arg(*ap, int), 1);
+		len = _putchar(va_arg(*ap, int));
 	else if (fmt[i] == 's')
-		len = _putstr_fd(va_arg(*ap, char *), 1);
+		len = _putstr(va_arg(*ap, char *));
 	else if (fmt[i] == 'p')
-		len = _putptr_fd(va_arg(*ap, void *), 1);
+		len = _putptr(va_arg(*ap, void *));
 	else if (fmt[i] == 'd' || fmt[i] == 'i' || fmt[i] == 'u')
-		len = _putnbr_fd(va_arg(*ap, int), 1);
+		len = _putnbr(va_arg(*ap, int));
 	else if (fmt[i] == 'x')
-		len = _putnbrhex_fd(va_arg(*ap, int), "0123456789abcdef", 1);
+		len = _putnbrhex(va_arg(*ap, int), "0123456789abcdef");
 	else if (fmt[i] == 'X')
-		len = _putnbrhex_fd(va_arg(*ap, int), "0123456789ABCDEF", 1);
+		len = _putnbrhex(va_arg(*ap, int), "0123456789ABCDEF");
 	return (len);
 }
 
@@ -89,13 +89,13 @@ int	ft_printf(const char *fmt, ...)
 	return (len);
 }
 
-static int	_putchar_fd(char c, int fd)
+static int	_putchar(char c)
 {
-	write(fd, &c, 1);
+	write(1, &c, 1);
 	return (1);
 }
 
-static int	_putstr_fd(char *s, int fd)
+static int	_putstr(char *s)
 {
 	size_t	i;
 
@@ -104,11 +104,11 @@ static int	_putstr_fd(char *s, int fd)
 	i = 0;
 	while (s[i] != '\0')
 		i++;
-	write(fd, s, i);
+	write(1, s, i);
 	return (i);
 }
 
-static	int	_putnbr_fd(int n, int fd)
+static	int	_putnbr(int n)
 {
 	unsigned int	nb;
 	int				i;
@@ -117,48 +117,48 @@ static	int	_putnbr_fd(int n, int fd)
 	i = 0;
 	if (n < 0)
 	{
-		write(fd, "-", 1);
+		write(1, "-", 1);
 		nb = -n;
 		i++;
 	}
 	if (nb >= 10)
 	{
-		_putnbr_fd(nb / 10, fd);
+		_putnbr(nb / 10);
 		nb = nb % 10;
 	}
 	if (nb < 10)
 	{
 		nb = nb + 48;
-		write(fd, &nb, 1);
+		write(1, &nb, 1);
 		i++;
 	}
 	return (i);
 }
 
-static	int	_putnbrhex_fd(unsigned int n, char *base, int fd)
+static	int	_putnbrhex(unsigned int n, char *base)
 {
 	unsigned	int	i;
 
 	i = 0;
 	if (n > 16)
 	{
-		_putnbrhex_fd(n / 16, base, fd);
+		_putnbrhex(n / 16, base);
 		n = n % 16;
 	}
 	if (n < 16)
 	{
-		write(fd, &base[n], 1);
+		write(1, &base[n], 1);
 		i++;
 	}
 	return (i);
 }
 
-static	int	_putptr_fd(void *ptr, int fd)
+static	int	_putptr(void *ptr)
 {
 	void	*p;
 
 	p = (void *) ptr;
-	write(fd, "0x", 2);
-	write(fd, &p, 12);
+	write(1, "0x", 2);
+	write(1, &p, 12);
 	return (14);
 }
