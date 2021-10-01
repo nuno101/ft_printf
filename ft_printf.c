@@ -6,7 +6,7 @@
 /*   By: nlouro <nlouro@student.42heilbronn.de>       +#+  +:+       +#+      */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/25 23:43:32 by nlouro              #+#    #+#           */
-/*   Updated: 2021/10/01 11:01:23 by nlouro           ###   ########.fr       */
+/*   Updated: 2021/10/01 12:04:11 by nlouro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,23 +61,32 @@ int	ft_printf(const char *fmt, ...)
 	if (fmt == 0)
 		return (0);
 	i = 0;
+	len = 0;
 	va_start(ap, fmt);
 	while (fmt[i] != '\0')
 	{
-		if (fmt[i] == '%' && fmt[i + 1] != '%')
+		if (fmt[i] == '%')
 		{
 			i++;
-			len = _print_arg(fmt, &ap, i);
-			i = i + len;
+			if (fmt[i] == '%')
+			{
+				write(1, &fmt[i], 1);
+				len++;
+			}
+			else
+			{
+				len += _print_arg(fmt, &ap, i);
+			}
 		}
 		else
 		{
 			write(1, &fmt[i], 1);
 			i++;
+			len++;
 		}
 	}
 	va_end(ap);
-	return (i);
+	return (len);
 }
 
 static int	_putchar_fd(char c, int fd)

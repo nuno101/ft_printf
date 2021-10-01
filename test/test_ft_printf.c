@@ -15,8 +15,21 @@ int	main()
 	u = 123567890;
 	c = 'c';
 
+	r = printf("%%\n");
+	ftr = ft_printf("%%\n");
+	printf("r = %d and ftr = %d\n", r, ftr);
+
+
+	r = printf("%5%\n");
+	ftr = ft_printf("%5%\n");
+	printf("r = %d and ftr = %d\n", r, ftr);
+
 	r = printf("  _printing c: %c 123\n", c);
 	ftr = ft_printf("ft_printing c: %c 123\n", c);
+	printf("r = %d and ftr = %d\n", r, ftr);
+
+	r = printf("  _printing c: %3c 123\n", c);
+	ftr = ft_printf("ft_printing c: %3c 123\n", c);
 	printf("r = %d and ftr = %d\n", r, ftr);
 
 	r = printf("  _printing n: %d 123\n", n);
