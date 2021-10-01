@@ -1,21 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf.h                                        :+:      :+:    :+:   */
+/*   ft_bzero.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nlouro <nlouro@student.42heilbronn.de>      +#+  +:+       +#+       */
+/*   By: nlouro <nlouro@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/09/25 23:44:11 by nlouro              #+#    #+#           */
-/*   Updated: 2021/10/01 19:13:13 by nlouro           ###   ########.fr       */
+/*   Created: 2021/08/25 11:14:07 by nlouro            #+#    #+#             */
+/*   Updated: 2021/08/26 10:57:10 by nlouro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_PRINTF_H
-# define FT_PRINTF_H
-# include <unistd.h>
-# include <stdarg.h>
-# include "libft/ft_isdigit.c"
+#include <stddef.h>
 
-int	ft_printf(const char *fmt, ...);
+void	ft_bzero(void *s, size_t n)
+{
+	char	*ptr;
 
-#endif
+	ptr = s;
+	while (n > 0)
+	{
+		n--;
+		ptr[n] = 0;
+	}
+	return ;
+}

@@ -6,12 +6,11 @@
 /*   By: nlouro <nlouro@student.42heilbronn.de>       +#+  +:+       +#+      */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/25 23:43:32 by nlouro              #+#    #+#           */
-/*   Updated: 2021/10/01 18:02:32 by nlouro           ###   ########.fr       */
+/*   Updated: 2021/10/01 19:14:27 by nlouro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-#include "libft/ft_isdigit.c"
 
 #define UINT_MAX	4294967295
 /*
@@ -34,7 +33,7 @@ static int	_putnbr(int n);
 static int	_putunbr(unsigned int n);
 static int	_putptr(unsigned long ptr);
 static int	_putnbrhex(unsigned int n, char *base);
-static int	_putpercent();
+static int	_putpercent(void);
 
 static	int	_print_arg(const char *fmt, va_list *ap, int i)
 {
@@ -56,7 +55,7 @@ static	int	_print_arg(const char *fmt, va_list *ap, int i)
 	else if (fmt[i] == 'X')
 		len = _putnbrhex(va_arg(*ap, int), "0123456789ABCDEF");
 	else if (fmt[i] == '%')
-		len = _putpercent(0);
+		len = _putpercent();
 	return (len);
 }
 
@@ -81,10 +80,7 @@ int	ft_printf(const char *fmt, ...)
 			len += _print_arg(fmt, &ap, i);
 		}
 		else
-		{
-			write(1, &fmt[i], 1);
-			len++;
-		}
+			len += _putchar(fmt[i]);
 		i++;
 	}
 	va_end(ap);
@@ -157,12 +153,11 @@ static	int	_putnbr(int n)
 	return (_nbrlen(n, 10));
 }
 
-
 static	int	_putunbr(unsigned int n)
 {
 	unsigned int	len;
 	unsigned int	nb;
-	char 			*base;
+	char			*base;
 
 	len = 0;
 	base = "0123456789";
@@ -204,14 +199,14 @@ static	int	_putnbrhex(unsigned int n, char *base)
 
 static	int	_putptr(unsigned long ptr)
 {
-	int len;
+	int	len;
 
 	write(1, "0x", 2);
 	len = _putnbrhex(ptr, "0123456789abcdef");
 	return (2 + len);
 }
 
-static int	_putpercent()
+static int	_putpercent(void)
 {
 	write(1, "%", 1);
 	return (1);
