@@ -6,7 +6,7 @@
 /*   By: nlouro <nlouro@student.42heilbronn.de>       +#+  +:+       +#+      */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/25 23:43:32 by nlouro              #+#    #+#           */
-/*   Updated: 2021/09/30 16:53:57 by nlouro           ###   ########.fr       */
+/*   Updated: 2021/10/01 10:15:06 by nlouro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ int	ft_printf(const char *fmt, ...)
 		}
 	}
 	va_end(ap);
-	return (0);
+	return (i + j -1);
 }
 
 static int	_putchar_fd(char c, int fd)
