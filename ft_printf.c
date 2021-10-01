@@ -6,7 +6,7 @@
 /*   By: nlouro <nlouro@student.42heilbronn.de>       +#+  +:+       +#+      */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/25 23:43:32 by nlouro              #+#    #+#           */
-/*   Updated: 2021/10/01 10:46:11 by nlouro           ###   ########.fr       */
+/*   Updated: 2021/10/01 11:01:23 by nlouro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,38 +51,33 @@ static	int	_print_arg(const char *fmt, va_list *ap, int i)
 	return (len);
 }
 
+//printf("\nDEBUG i + j = %d", i + j);
 int	ft_printf(const char *fmt, ...)
 {
 	va_list	ap;
 	int		i;
-	int		j;
 	int		len;
 
 	if (fmt == 0)
 		return (0);
 	i = 0;
-	j = 0;
 	va_start(ap, fmt);
-	while (fmt[i + j] != '\0')
+	while (fmt[i] != '\0')
 	{
-		//printf("\nDEBUG i + j = %d", i + j);
-		if (fmt[i + j] == '%')
+		if (fmt[i] == '%' && fmt[i + 1] != '%')
 		{
-			//% character write(1, &fmt[i + j], 1);
-			j = j + i + 1;
-			i = 0;
-			len = _print_arg(fmt, &ap, j);
-			//printf("DEBUG j = %d, len = %d\n", j, len);
-			j = j + len;
+			i++;
+			len = _print_arg(fmt, &ap, i);
+			i = i + len;
 		}
 		else
 		{
-			write(1, &fmt[i + j], 1);
+			write(1, &fmt[i], 1);
 			i++;
 		}
 	}
 	va_end(ap);
-	return (i + j - 1);
+	return (i);
 }
 
 static int	_putchar_fd(char c, int fd)
@@ -143,7 +138,6 @@ static	int	_putnbrhex_fd(unsigned int n, char *base, int fd)
 	}
 	if (n < 16)
 	{
-		//n = n + 48;
 		write(fd, &base[n], 1);
 		i++;
 	}
