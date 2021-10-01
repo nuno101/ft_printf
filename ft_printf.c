@@ -6,7 +6,7 @@
 /*   By: nlouro <nlouro@student.42heilbronn.de>       +#+  +:+       +#+      */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/25 23:43:32 by nlouro              #+#    #+#           */
-/*   Updated: 2021/10/01 17:42:12 by nlouro           ###   ########.fr       */
+/*   Updated: 2021/10/01 17:49:07 by nlouro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@
 
 static int	_putstr(char *s);
 static int	_putchar(char c);
-static int	_nbrlen(long int nb);
+static int	_nbrlen(long int nb, int base);
 static int	_putnbr(int n);
 static int	_putunbr(unsigned int n);
 static int	_putptr(void *ptr);
@@ -113,7 +113,7 @@ static int	_putstr(char *s)
 	return (i);
 }
 
-static int	_nbrlen(long nb)
+static int	_nbrlen(long nb, int base)
 {
 	int	i;
 
@@ -124,7 +124,7 @@ static int	_nbrlen(long nb)
 		i++;
 	while (nb != 0)
 	{
-		nb = nb / 10;
+		nb = nb / base;
 		i++;
 	}
 	return (i);
@@ -154,7 +154,7 @@ static	int	_putnbr(int n)
 		write(1, &nb, 1);
 		i++;
 	}
-	return (_nbrlen(n));
+	return (_nbrlen(n, 10));
 }
 
 
@@ -179,14 +179,15 @@ static	int	_putunbr(unsigned int n)
 		write(1, &base[n], 1);
 		len++;
 	}
-	//printf("\nDEBUG nb: %u len: %i", nb, _nbrlen(nb));
-	return (_nbrlen(nb));
+	return (_nbrlen(nb, 10));
 }
 
 static	int	_putnbrhex(unsigned int n, char *base)
 {
+	unsigned int	nb;
 	unsigned int	i;
 
+	nb = n;
 	i = 0;
 	if (n >= 16)
 	{
@@ -198,7 +199,7 @@ static	int	_putnbrhex(unsigned int n, char *base)
 		write(1, &base[n], 1);
 		i++;
 	}
-	return (i);
+	return (_nbrlen(nb, 16));
 }
 
 static	int	_putptr(void *ptr)

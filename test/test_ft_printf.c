@@ -65,8 +65,8 @@ int	main()
     ftr = ft_printf(" NULL %s NULL \n", NULL);
 	printf("r = %d and ftr = %d\n\n", r, ftr);
 
-	r = printf("  _printing hex: %x 123\n", u);
-	ftr = ft_printf("ft_printing hex: %x 123\n", u);
+	r = printf("hex: %x\n", u);
+	ftr = ft_printf("hex: %x\n", u);
 	printf("r = %d and ftr = %d\n\n", r, ftr);
 
 	r = printf("  _printing HEX: %X 123\n", u);
