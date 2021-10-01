@@ -69,25 +69,25 @@ int	main()
 	ftr = ft_printf("hex: %x\n", u);
 	printf("r = %d and ftr = %d\n\n", r, ftr);
 
-	r = printf("  _printing HEX: %X 123\n", u);
-	ftr = ft_printf("ft_printing HEX: %X 123\n", u);
+	r = printf("HEX: %X 123\n", u);
+	ftr = ft_printf("HEX: %X 123\n", u);
 	printf("r = %d and ftr = %d\n\n", r, ftr);
 
 	n = -210;
-	r = printf("  _printing n: %d123\n", n);
-	ftr = ft_printf("ft_printing n: %d123\n", n);
+	r = printf("n: %d123\n", n);
+	ftr = ft_printf("n: %d123\n", n);
 	printf("r = %d and ftr = %d\n\n", r, ftr);
 
-	r = printf("  _printing c: %c123\n", c);
-	ftr = ft_printf("ft_printing c: %c123\n", c);
+	r = printf("c: %c123\n", c);
+	ftr = ft_printf("c: %c123\n", c);
 	printf("r = %d and ftr = %d\n\n", r, ftr);
 
-	r = printf("  _printing str: %s 123\n", str);
-	ftr = ft_printf("ftprinting str: %s 123\n", str);
+	r = printf("str: %s 123\n", str);
+	ftr = ft_printf("str: %s 123\n", str);
 	printf("r = %d and ftr = %d\n\n", r, ftr);
 
-	r = printf("  _printing *str: %p 123\n", str);
-	ftr = ft_printf("ftprinting *str: %p 123\n", str);
+	r = printf("*str: %p 123\n", str);
+	ftr = ft_printf("*str: %p 123\n", str);
 	printf("r = %d and ftr = %d\n\n", r, ftr);
 
 	return (0);

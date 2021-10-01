@@ -6,7 +6,7 @@
 /*   By: nlouro <nlouro@student.42heilbronn.de>       +#+  +:+       +#+      */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/25 23:43:32 by nlouro              #+#    #+#           */
-/*   Updated: 2021/10/01 17:49:07 by nlouro           ###   ########.fr       */
+/*   Updated: 2021/10/01 18:02:32 by nlouro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static int	_putchar(char c);
 static int	_nbrlen(long int nb, int base);
 static int	_putnbr(int n);
 static int	_putunbr(unsigned int n);
-static int	_putptr(void *ptr);
+static int	_putptr(unsigned long ptr);
 static int	_putnbrhex(unsigned int n, char *base);
 static int	_putpercent();
 
@@ -46,7 +46,7 @@ static	int	_print_arg(const char *fmt, va_list *ap, int i)
 	else if (fmt[i] == 's')
 		len = _putstr(va_arg(*ap, char *));
 	else if (fmt[i] == 'p')
-		len = _putptr(va_arg(*ap, void *));
+		len = _putptr((long) va_arg(*ap, void *));
 	else if (fmt[i] == 'd' || fmt[i] == 'i')
 		len = _putnbr(va_arg(*ap, int));
 	else if (fmt[i] == 'u')
@@ -202,14 +202,13 @@ static	int	_putnbrhex(unsigned int n, char *base)
 	return (_nbrlen(nb, 16));
 }
 
-static	int	_putptr(void *ptr)
+static	int	_putptr(unsigned long ptr)
 {
-	void	*p;
+	int len;
 
-	p = (void *) ptr;
 	write(1, "0x", 2);
-	write(1, &p, 12);
-	return (14);
+	len = _putnbrhex(ptr, "0123456789abcdef");
+	return (2 + len);
 }
 
 static int	_putpercent()
