@@ -1,21 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf.h                                        :+:      :+:    :+:   */
+/*   ft_putchar_fd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nlouro <nlouro@student.42heilbronn.de>      +#+  +:+       +#+       */
+/*   By: nlouro <nlouro@student.42heilbronn.de      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/09/25 23:44:11 by nlouro              #+#    #+#           */
-/*   Updated: 2021/10/01 19:13:13 by nlouro           ###   ########.fr       */
+/*   Created: 2021/09/14 19:59:47 by nlouro            #+#    #+#             */
+/*   Updated: 2021/09/14 22:14:10 by nlouro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_PRINTF_H
-# define FT_PRINTF_H
-# include <unistd.h>
-# include <stdarg.h>
-# include "libft/ft_isdigit.c"
+#include <unistd.h>
 
-int	ft_printf(const char *fmt, ...);
-
-#endif
+void	ft_putchar_fd(char c, int fd)
+{
+	write(fd, &c, 1);
+}

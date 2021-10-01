@@ -1,21 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf.h                                        :+:      :+:    :+:   */
+/*   ft_striteri.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nlouro <nlouro@student.42heilbronn.de>      +#+  +:+       +#+       */
+/*   By: nlouro <nlouro@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/09/25 23:44:11 by nlouro              #+#    #+#           */
-/*   Updated: 2021/10/01 19:13:13 by nlouro           ###   ########.fr       */
+/*   Created: 2021/09/14 23:12:12 by nlouro            #+#    #+#             */
+/*   Updated: 2021/09/15 11:50:20 by nlouro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_PRINTF_H
-# define FT_PRINTF_H
-# include <unistd.h>
-# include <stdarg.h>
-# include "libft/ft_isdigit.c"
+void	ft_striteri(char *s, void (*f)(unsigned int, char*))
+{
+	unsigned int	i;
 
-int	ft_printf(const char *fmt, ...);
-
-#endif
+	if (s == 0)
+		return ;
+	i = 0;
+	while (s[i] != '\0')
+	{
+		f(i, &s[i]);
+		i++;
+	}
+}
