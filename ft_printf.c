@@ -6,13 +6,14 @@
 /*   By: nlouro <nlouro@student.42heilbronn.de>       +#+  +:+       +#+      */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/25 23:43:32 by nlouro              #+#    #+#           */
-/*   Updated: 2021/10/01 15:51:54 by nlouro           ###   ########.fr       */
+/*   Updated: 2021/10/01 17:25:51 by nlouro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 #include "libft/ft_isdigit.c"
 
+#define UINT_MAX	4294967295
 /*
  * printf partial re-implementation:
  * %c print a single character.
@@ -28,8 +29,9 @@
 
 static int	_putstr(char *s);
 static int	_putchar(char c);
-static int	_nbrlen(int nb);
+static int	_nbrlen(long int nb);
 static int	_putnbr(int n);
+static int	_putunbr(unsigned int n);
 static int	_putptr(void *ptr);
 static int	_putnbrhex(unsigned int n, char *base);
 static int	_putpercent();
@@ -45,8 +47,13 @@ static	int	_print_arg(const char *fmt, va_list *ap, int i)
 		len = _putstr(va_arg(*ap, char *));
 	else if (fmt[i] == 'p')
 		len = _putptr(va_arg(*ap, void *));
-	else if (fmt[i] == 'd' || fmt[i] == 'i' || fmt[i] == 'u')
+	else if (fmt[i] == 'd' || fmt[i] == 'i')
 		len = _putnbr(va_arg(*ap, int));
+	else if (fmt[i] == 'u')
+	{
+		len = _putunbr(va_arg(*ap, unsigned int));
+		//printf("\nXXDEBUG len: %i", len);
+	}
 	else if (fmt[i] == 'x')
 		len = _putnbrhex(va_arg(*ap, int), "0123456789abcdef");
 	else if (fmt[i] == 'X')
@@ -106,7 +113,7 @@ static int	_putstr(char *s)
 	return (i);
 }
 
-static int	_nbrlen(int nb)
+static int	_nbrlen(long nb)
 {
 	int	i;
 
@@ -150,12 +157,38 @@ static	int	_putnbr(int n)
 	return (_nbrlen(n));
 }
 
+
+static	int	_putunbr(unsigned int n)
+{
+	unsigned int	len;
+	unsigned int	nb;
+	char 			*base;
+
+	len = 0;
+	base = "0123456789";
+	if (n < 0)
+		n = UINT_MAX + n;
+	nb = n;
+	if (n >= 10)
+	{
+		_putunbr(n / 10);
+		n = n % 10;
+	}
+	if (n < 10)
+	{
+		write(1, &base[n], 1);
+		len++;
+	}
+	//printf("\nDEBUG nb: %u len: %i", nb, _nbrlen(nb));
+	return (_nbrlen(nb));
+}
+
 static	int	_putnbrhex(unsigned int n, char *base)
 {
 	unsigned int	i;
 
 	i = 0;
-	if (n > 16)
+	if (n >= 16)
 	{
 		_putnbrhex(n / 16, base);
 		n = n % 16;

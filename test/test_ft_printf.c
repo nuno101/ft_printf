@@ -43,14 +43,24 @@ int	main()
 	ftr = ft_printf("n: %d\n", -n);
 	printf("len = %d, r = %d and ftr = %d\n\n", len, r, ftr);
 
-	r = printf("  _printing i: %i 123\n", n);
-	ftr = ft_printf("ft_printing i: %i 123\n", n);
+	r = printf("i: %i 123\n", n);
+	ftr = ft_printf("i: %i 123\n", n);
 	printf("r = %d and ftr = %d\n\n", r, ftr);
 
-	r = printf("  _printing u: %i 123\n", u);
-	ftr = ft_printf("ft_printing u: %i 123\n", u);
+	r = printf("u: %i 123\n", u);
+	ftr = ft_printf("u: %i 123\n", u);
 	printf("r = %d and ftr = %d\n\n", r, ftr);
 
+	//printf("UINT_MAX: %u\n", UINT_MAX);
+	u = -1;
+	r = printf("u: %u\n", u);
+	ftr = ft_printf("u: %u\n", u);
+	printf("r = %d and ftr = %d\n\n", r, ftr);
+
+	u = -2;
+	r = printf("u: %u 123\n", u);
+	ftr = ft_printf("u: %u 123\n", u);
+	printf("r = %d and ftr = %d\n\n", r, ftr);
 
 	r = printf("  _printing hex: %x 123\n", u);
 	ftr = ft_printf("ft_printing hex: %x 123\n", u);
