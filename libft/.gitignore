@@ -1,7 +1,0 @@
-*.o
-*.a
-*.out
-*.swp
-test/*.o
-test/*.out
-FT_SPLIT_TESTER
