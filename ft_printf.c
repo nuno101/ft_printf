@@ -6,7 +6,7 @@
 /*   By: nlouro <nlouro@student.42heilbronn.de>       +#+  +:+       +#+      */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/25 23:43:32 by nlouro              #+#    #+#           */
-/*   Updated: 2021/10/08 09:37:41 by nlouro           ###   ########.fr       */
+/*   Updated: 2021/10/08 09:57:02 by nlouro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,15 +25,6 @@
  * %X print a number in hexadecimal (base 16), with uppercase. 
  * %% print a percent sign.
  */
-
-static int	_putstr(char *s);
-static int	_putchar(char c);
-static int	_nbrlen(long int nb, int base);
-static int	_putnbr(int n);
-static int	_putunbr(unsigned int n);
-static int	_putptr(unsigned long ptr);
-static int	_putnbrhex(unsigned int n, char *base);
-static int	_putpercent(void);
 
 static	int	_print_arg(const char *fmt, va_list *ap, int i)
 {
@@ -87,29 +78,7 @@ int	ft_printf(const char *fmt, ...)
 	return (len);
 }
 
-static int	_putchar(char c)
-{
-	write(1, &c, 1);
-	return (1);
-}
-
-static int	_putstr(char *s)
-{
-	size_t	i;
-
-	if (s == 0)
-	{
-		_putstr("(null)");
-		return (6);
-	}
-	i = 0;
-	while (s[i] != '\0')
-		i++;
-	write(1, s, i);
-	return (i);
-}
-
-static int	_nbrlen(long nb, int base)
+int	_nbrlen(long nb, int base)
 {
 	int	i;
 
@@ -126,58 +95,7 @@ static int	_nbrlen(long nb, int base)
 	return (i);
 }
 
-static	int	_putnbr(int n)
-{
-	unsigned int	nb;
-	int				i;
-
-	nb = n;
-	i = 0;
-	if (n < 0)
-	{
-		write(1, "-", 1);
-		nb = -n;
-		i++;
-	}
-	if (nb >= 10)
-	{
-		_putnbr(nb / 10);
-		nb = nb % 10;
-	}
-	if (nb < 10)
-	{
-		nb = nb + 48;
-		write(1, &nb, 1);
-		i++;
-	}
-	return (_nbrlen(n, 10));
-}
-
-static	int	_putunbr(unsigned int n)
-{
-	unsigned int	len;
-	unsigned int	nb;
-	char			*base;
-
-	len = 0;
-	base = "0123456789";
-	if (n < 0)
-		n = UINT_MAX + n;
-	nb = n;
-	if (n >= 10)
-	{
-		_putunbr(n / 10);
-		n = n % 10;
-	}
-	if (n < 10)
-	{
-		write(1, &base[n], 1);
-		len++;
-	}
-	return (_nbrlen(nb, 10));
-}
-
-static	int	_putnbrhex(unsigned int n, char *base)
+int	_putnbrhex(unsigned int n, char *base)
 {
 	unsigned int	nb;
 	unsigned int	i;
@@ -197,17 +115,11 @@ static	int	_putnbrhex(unsigned int n, char *base)
 	return (_nbrlen(nb, 16));
 }
 
-static	int	_putptr(unsigned long ptr)
+int	_putptr(unsigned long ptr)
 {
 	int	len;
 
 	write(1, "0x", 2);
 	len = _putnbrhex(ptr, "0123456789abcdef");
 	return (2 + len);
-}
-
-static int	_putpercent(void)
-{
-	write(1, "%", 1);
-	return (1);
 }

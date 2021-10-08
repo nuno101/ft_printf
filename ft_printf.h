@@ -6,7 +6,7 @@
 /*   By: nlouro <nlouro@student.42heilbronn.de>      +#+  +:+       +#+       */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/25 23:44:11 by nlouro              #+#    #+#           */
-/*   Updated: 2021/10/08 09:38:42 by nlouro           ###   ########.fr       */
+/*   Updated: 2021/10/08 09:57:14 by nlouro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,14 @@
 # include <unistd.h>
 # include <stdarg.h>
 
+int	_putstr(char *s);
+int	_putchar(char c);
+int	_nbrlen(long int nb, int base);
+int	_putnbr(int n);
+int	_putunbr(unsigned int n);
+int	_putptr(unsigned long ptr);
+int	_putnbrhex(unsigned int n, char *base);
+int	_putpercent(void);
 int	ft_printf(const char *fmt, ...);
 
 #endif
