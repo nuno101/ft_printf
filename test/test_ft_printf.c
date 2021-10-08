@@ -2,6 +2,8 @@
 #include "../ft_printf.c"
 #include "../ft_printf_utils.c"
 
+//#define LONG_MIN	-9223372036854775808
+
 int	main()
 {
 	int n;
@@ -87,9 +89,14 @@ int	main()
 	ftr = ft_printf("str: %s 123\n", str);
 	printf("r = %d and ftr = %d\n\n", r, ftr);
 
-	r = printf("*str: %p 123\n", str);
-	ftr = ft_printf("*str: %p 123\n", str);
+	r = printf("*str: %p\n", str);
+	ftr = ft_printf("*str: %p\n", str);
 	printf("r = %d and ftr = %d\n\n", r, ftr);
 
+/*
+	r = printf("LONG_MIN: %p\n", LONG_MIN);
+	ftr = ft_printf("LONG_MIN: %p\n", LONG_MIN);
+	printf("r = %d and ftr = %d\n\n", r, ftr);
+*/
 	return (0);
 }

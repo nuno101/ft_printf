@@ -6,7 +6,7 @@
 /*   By: nlouro <nlouro@student.42heilbronn.de>       +#+  +:+       +#+      */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/25 23:43:32 by nlouro              #+#    #+#           */
-/*   Updated: 2021/10/08 09:57:02 by nlouro           ###   ########.fr       */
+/*   Updated: 2021/10/08 11:54:15 by nlouro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,11 +115,29 @@ int	_putnbrhex(unsigned int n, char *base)
 	return (_nbrlen(nb, 16));
 }
 
+void	_putlnbrhex(unsigned long n, char *base)
+{
+	unsigned int	i;
+
+	i = 0;
+	if (n >= 16)
+	{
+		_putlnbrhex(n / 16, base);
+		n = n % 16;
+	}
+	if (n < 16)
+	{
+		write(1, &base[n], 1);
+		i++;
+	}
+	return;
+}
+
 int	_putptr(unsigned long ptr)
 {
-	int	len;
-
+	unsigned long nb;
 	write(1, "0x", 2);
-	len = _putnbrhex(ptr, "0123456789abcdef");
-	return (2 + len);
+	nb = ptr;
+	_putlnbrhex(ptr, "0123456789abcdef");
+	return (2 + _nbrlen(nb, 16));
 }
