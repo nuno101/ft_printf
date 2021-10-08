@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <limits.h>
 #include "../ft_printf.c"
 #include "../ft_printf_utils.c"
 
@@ -11,6 +12,8 @@ int	main()
 	char c;
 	//char *str[5];
 	char str[] = "test";
+	long lmin;
+	unsigned long ulmax;
 	int r; //result
 	int ftr; //ft_ result
 	int len;
@@ -18,6 +21,8 @@ int	main()
 	n = 123;
 	u = 123567890;
 	c = 'c';
+    lmin = LONG_MIN;
+	ulmax = ULONG_MAX;
 
 	r = printf("%%\n");
 	ftr = ft_printf("%%\n");
@@ -93,10 +98,19 @@ int	main()
 	ftr = ft_printf("*str: %p\n", str);
 	printf("r = %d and ftr = %d\n\n", r, ftr);
 
-/*
-	r = printf("LONG_MIN: %p\n", LONG_MIN);
-	ftr = ft_printf("LONG_MIN: %p\n", LONG_MIN);
+	r = printf("LONG_MIN: %p\n", &lmin);
+	ftr = ft_printf("LONG_MIN: %p\n", &lmin);
 	printf("r = %d and ftr = %d\n\n", r, ftr);
-*/
+
+	r = printf("ULONG_MAX: %p\n", &ulmax);
+	ftr = ft_printf("ULONG_MAX: %p\n", &ulmax);
+	printf("r = %d and ftr = %d\n\n", r, ftr);
+
+	u = -1;
+	r = printf("p -1: %p\n", &u);
+	ftr = ft_printf("p -1: %p\n", &u);
+	printf("r = %d and ftr = %d\n\n", r, ftr);
+
+
 	return (0);
 }

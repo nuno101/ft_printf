@@ -6,13 +6,13 @@
 /*   By: nlouro <nlouro@student.42heilbronn.de>       +#+  +:+       +#+      */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/25 23:43:32 by nlouro              #+#    #+#           */
-/*   Updated: 2021/10/08 09:55:05 by nlouro           ###   ########.fr       */
+/*   Updated: 2021/10/08 13:45:47 by nlouro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-#define UINT_MAX	4294967295
+#define FT_UINT_MAX	4294967295
 
 int	_putchar(char c)
 {
@@ -72,7 +72,7 @@ int	_putunbr(unsigned int n)
 	len = 0;
 	base = "0123456789";
 	if (n < 0)
-		n = UINT_MAX + n;
+		n = FT_UINT_MAX + n;
 	nb = n;
 	if (n >= 10)
 	{

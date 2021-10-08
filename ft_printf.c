@@ -6,13 +6,12 @@
 /*   By: nlouro <nlouro@student.42heilbronn.de>       +#+  +:+       +#+      */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/25 23:43:32 by nlouro              #+#    #+#           */
-/*   Updated: 2021/10/08 11:54:15 by nlouro           ###   ########.fr       */
+/*   Updated: 2021/10/08 14:03:07 by nlouro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-#define UINT_MAX	4294967295
 /*
  * printf partial re-implementation:
  * %c print a single character.
@@ -36,7 +35,10 @@ static	int	_print_arg(const char *fmt, va_list *ap, int i)
 	else if (fmt[i] == 's')
 		len = _putstr(va_arg(*ap, char *));
 	else if (fmt[i] == 'p')
-		len = _putptr((long) va_arg(*ap, void *));
+	{
+		write(1, "0x", 2);
+		len = 2 + _putlnbrhex((long) va_arg(*ap, void *), "0123456789abcdef");
+	}
 	else if (fmt[i] == 'd' || fmt[i] == 'i')
 		len = _putnbr(va_arg(*ap, int));
 	else if (fmt[i] == 'u')
@@ -115,14 +117,14 @@ int	_putnbrhex(unsigned int n, char *base)
 	return (_nbrlen(nb, 16));
 }
 
-void	_putlnbrhex(unsigned long n, char *base)
+int	_putlnbrhex(unsigned long n, char *base)
 {
 	unsigned int	i;
 
 	i = 0;
 	if (n >= 16)
 	{
-		_putlnbrhex(n / 16, base);
+		i = _putlnbrhex(n / 16, base);
 		n = n % 16;
 	}
 	if (n < 16)
@@ -130,14 +132,5 @@ void	_putlnbrhex(unsigned long n, char *base)
 		write(1, &base[n], 1);
 		i++;
 	}
-	return;
-}
-
-int	_putptr(unsigned long ptr)
-{
-	unsigned long nb;
-	write(1, "0x", 2);
-	nb = ptr;
-	_putlnbrhex(ptr, "0123456789abcdef");
-	return (2 + _nbrlen(nb, 16));
+	return (i);
 }
