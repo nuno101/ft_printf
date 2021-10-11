@@ -6,7 +6,7 @@
 #    By: nlouro <nlouro@student.42heilbronn.de>       +#+  +:+       +#+       #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/25 23:47:18 by nlouro              #+#    #+#            #
-#    Updated: 2021/09/30 16:53:30 by nlouro           ###   ########.fr        #
+#    Updated: 2021/10/08 09:52:50 by nlouro           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME = libftprintf.a
 
 C_FLAGS =  -c -Wall -Wextra -Werror
 
-C_FILES = ft_printf.c
+C_FILES = ft_printf.c	ft_printf_utils.c
 
 OBJ_FILES = $(C_FILES:%.c=%.o)
 
